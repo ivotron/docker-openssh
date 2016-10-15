@@ -33,8 +33,4 @@ fi
 
 sed -i "s/Port.*/Port ${SSHD_PORT}/" /etc/ssh/sshd_config
 
-echo 'Host any' > /root/.ssh/config
-echo '  Hostname *' >> /root/.ssh/config
-echo "  Port $SSHD_PORT" >> /root/.ssh/config
-
 exec /usr/sbin/sshd -D
