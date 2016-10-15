@@ -1,30 +1,30 @@
 #!/bin/bash
 
-function add_to_file {
-    touch /root/.ssh/$1
-    chmod 600 /root/.ssh/$1
+if [ -n "${AUTHORIZED_KEYS}" ]; then
+    echo "=> Found authorized keys"
+    touch /root/.ssh/authorized_keys
+    chmod 600 /root/.ssh/authorized_keys
     IFS=$'\n'
-    arr=$(echo ${$2} | tr "," "\n")
+    arr=$(echo ${AUTHORIZED_KEYS} | tr "," "\n")
     for x in $arr
     do
         x=$(echo $x |sed -e 's/^ *//' -e 's/ *$//')
-        cat /root/.ssh/$1 | grep "$x" >/dev/null 2>&1
+        cat /root/.ssh/authorized_keys | grep "$x" >/dev/null 2>&1
         if [ $? -ne 0 ]; then
-            echo "=> Adding public key to /root/.ssh/$1: $x"
-            echo "$x" >> /root/.ssh/$1
+            echo "=> Adding public key to /root/.ssh/authorized_keys: $x"
+            echo "$x" >> /root/.ssh/authorized_keys
         fi
     done
-}
-
-if [ -n "${AUTHORIZED_KEYS}" ]; then
-    echo "=> Found authorized keys"
-    add_to_file authorized_keys ${AUTHORIZED_KEYS}
 fi
+
 if [ -n "${ADD_INSECURE_KEY}" ]; then
     echo "=> Adding insecure key to authorized ones"
-    add_to_file authorized_keys `cat /root/.ssh/insecure_rsa.pub`
+    touch /root/.ssh/authorized_keys
+    chmod 600 /root/.ssh/authorized_keys
+    cat /root/.ssh/insecure_rsa.pub >> /root/.ssh/authorized_keys
+
     echo "=> Adding insecure key as this container's id_rsa"
-    add_to_file id_rsa `cat /root/.ssh/insecure_rsa`
+    mv /root/.ssh/insecure_rsa /root/.ssh/id_rsa
 fi
 
 if [ -z "$SSHD_PORT" ]; then
