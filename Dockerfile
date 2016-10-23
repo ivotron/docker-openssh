@@ -13,8 +13,8 @@ RUN mkdir -p /var/run/sshd && \
     mkdir -p /root/.ssh && \
     chmod 700 /root/.ssh
 
-ADD entrypoint.sh /root/
+ADD entrypoint.sh /root/.ssh/
 ADD insecure_rsa /root/.ssh/
 ADD insecure_rsa.pub /root/.ssh/
 
-ENTRYPOINT ["/root/entrypoint.sh"]
+ENTRYPOINT ["/root/.ssh/entrypoint.sh"]
