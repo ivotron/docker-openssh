@@ -33,4 +33,4 @@ fi
 
 sed -i "s/Port.*/Port ${SSHD_PORT}/" /etc/ssh/sshd_config
 
-exec /usr/sbin/sshd -D
+/usr/sbin/sshd -D
