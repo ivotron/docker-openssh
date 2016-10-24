@@ -16,5 +16,6 @@ RUN mkdir -p /var/run/sshd && \
 ADD entrypoint.sh /root/.ssh/
 ADD insecure_rsa /root/.ssh/
 ADD insecure_rsa.pub /root/.ssh/
+ADD stopsshd /usr/bin/
 
 ENTRYPOINT ["/root/.ssh/entrypoint.sh"]

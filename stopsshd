@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# stops sshd service on a given list of hosts
+
+for host in $1 ; do
+  ssh -p $SSHD_PORT $host service ssh stop
+done
