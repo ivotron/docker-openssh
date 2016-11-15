@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stretch
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -17,5 +17,7 @@ ADD entrypoint.sh /root/.ssh/
 ADD insecure_rsa /root/.ssh/
 ADD insecure_rsa.pub /root/.ssh/
 ADD stopsshd /usr/bin/
+
+RUN chmod 600 /root/.ssh/insecure_rsa
 
 ENTRYPOINT ["/root/.ssh/entrypoint.sh"]
