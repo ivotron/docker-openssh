@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM ubuntu:cosmic
 
 ARG DEBIAN_FRONTEND=noninteractive
 
