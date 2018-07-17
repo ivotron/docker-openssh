@@ -1,9 +1,10 @@
-FROM ubuntu:cosmic
+FROM debian:buster-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get -y --no-install-recommends install openssh-server && \
+    apt-get -y --no-install-recommends --no-install-suggests install \
+      openssh-server && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir -p /var/run/sshd && \
